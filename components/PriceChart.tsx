@@ -50,7 +50,7 @@ export default function PriceChart({ material }: { material: Material }) {
             <Tooltip
               contentStyle={{ backgroundColor: "#1e293b", border: "1px solid #334155", borderRadius: 8, fontSize: 12 }}
               labelStyle={{ color: "#94a3b8" }}
-              formatter={(v: number) => [`£${v.toLocaleString()}`, "Price"]}
+              formatter={(v) => [`£${Number(v).toLocaleString()}`, "Price"]}
             />
             <Line type="monotone" dataKey="price" stroke={colour} strokeWidth={2} dot={{ r: 3, fill: colour }} />
           </LineChart>
