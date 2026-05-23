@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "headline": "LME Copper hits 14-month high amid EV demand surge",
+    "summary": "London Metal Exchange copper prices reached a 14-month high this week as electric vehicle manufacturers accelerate procurement ahead of Q3 production ramp-ups. Chilean mine output remains 8% below forecast.",
+    "impact": ["Copper", "Brass"],
+    "sentiment": "negative",
+    "source": "Metal Bulletin",
+    "date": "2026-05-21"
+  },
+  {
+    "id": 2,
+    "headline": "UK steel imports rise 12% as domestic prices ease",
+    "summary": "Increased imports from Turkish and Eastern European mills are putting downward pressure on UK mild steel and structural steel prices. Analysts expect prices to stabilise through May before recovering in Q3.",
+    "impact": ["Mild Steel", "EN8 Steel"],
+    "sentiment": "positive",
+    "source": "UK Steel",
+    "date": "2026-05-20"
+  },
+  {
+    "id": 3,
+    "headline": "Nickel supply disruption continues to drive stainless premiums",
+    "summary": "Indonesian export restrictions on nickel ore are tightening global supply and pushing 304 and 316 stainless steel premiums higher across Europe. No resolution expected before Q4 2026.",
+    "impact": ["Stainless Steel"],
+    "sentiment": "negative",
+    "source": "Fastmarkets",
+    "date": "2026-05-19"
+  },
+  {
+    "id": 4,
+    "headline": "Polymer prices continue slide as oil prices soften",
+    "summary": "Engineering polymer prices including Nylon 66, ABS and Polypropylene continue to fall in line with crude oil prices. Industry analysts forecast a further 5-8% reduction through summer.",
+    "impact": ["Nylon 66"],
+    "sentiment": "positive",
+    "source": "ICIS",
+    "date": "2026-05-18"
+  },
+  {
+    "id": 5,
+    "headline": "Tungsten carbide tooling costs set to rise further",
+    "summary": "Chinese tungsten export restrictions introduced in March continue to tighten global carbide supply. Major tooling manufacturers including Sandvik and Kennametal have issued Q3 price increase notices of 5-8%.",
+    "impact": ["Carbide Inserts"],
+    "sentiment": "negative",
+    "source": "Cutting Tool Engineering",
+    "date": "2026-05-16"
+  },
+  {
+    "id": 6,
+    "headline": "Aluminium premiums ease as energy costs fall in Europe",
+    "summary": "European aluminium smelter output has increased following lower energy costs, easing supply pressure. Prices broadly stable with slight upward drift expected through summer.",
+    "impact": ["Aluminium"],
+    "sentiment": "neutral",
+    "source": "Aluminium Insider",
+    "date": "2026-05-15"
+  }
+]

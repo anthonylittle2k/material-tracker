@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "material": "Copper",
+    "type": "price_surge",
+    "severity": "high",
+    "message": "Copper has risen 15.3% over 90 days. Current price £9,850/t exceeds your alert threshold of £9,500/t.",
+    "action": "Review upcoming copper requirements and delay non-urgent orders.",
+    "timestamp": "2026-05-21T08:00:00Z",
+    "read": false
+  },
+  {
+    "id": 2,
+    "material": "Stainless Steel 304",
+    "type": "price_surge",
+    "severity": "high",
+    "message": "Stainless Steel 304 up 12.4% in 90 days. Nickel supply disruptions from Indonesia driving costs.",
+    "action": "Order only essential stock. Monitor LME nickel prices weekly.",
+    "timestamp": "2026-05-21T08:00:00Z",
+    "read": false
+  },
+  {
+    "id": 3,
+    "material": "Nylon 66",
+    "type": "buying_opportunity",
+    "severity": "low",
+    "message": "Nylon 66 has dropped 9.8% over 90 days — best price in 12 months.",
+    "action": "Consider increasing stock by 4-6 weeks. Renegotiate supplier contract — currently 9% above market.",
+    "timestamp": "2026-05-20T08:00:00Z",
+    "read": false
+  },
+  {
+    "id": 4,
+    "material": "Mild Steel",
+    "type": "buying_opportunity",
+    "severity": "low",
+    "message": "Mild Steel down 3.5% over 30 days. Historical Q3 recovery pattern suggests price rise likely in 6-8 weeks.",
+    "action": "Good window to buy forward 2-4 weeks additional stock.",
+    "timestamp": "2026-05-19T08:00:00Z",
+    "read": true
+  },
+  {
+    "id": 5,
+    "material": "Nylon 66",
+    "type": "supplier_overprice",
+    "severity": "medium",
+    "message": "Your supplier (Direct Plastics Ltd) is charging £4.20/kg vs market average of £3.85/kg — 9.1% above market.",
+    "action": "Contact supplier to renegotiate or request quotes from alternative suppliers.",
+    "timestamp": "2026-05-18T08:00:00Z",
+    "read": true
+  },
+  {
+    "id": 6,
+    "material": "Carbide Inserts",
+    "type": "supplier_overprice",
+    "severity": "medium",
+    "message": "Cromwell Tools pricing carbide inserts 7.2% above market. MSC Direct and Sandvik direct pricing available significantly lower.",
+    "action": "Request competitive quotes from MSC Direct or contact Sandvik for direct supply agreement.",
+    "timestamp": "2026-05-17T09:00:00Z",
+    "read": true
+  }
+]

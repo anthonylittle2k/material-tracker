@@ -1,0 +1,18 @@
+{
+  "companyName": "Precision Parts Ltd",
+  "lastUpdated": "2026-05-21T08:00:00Z",
+  "stats": {
+    "materialsTracked": 8,
+    "activeAlerts": 3,
+    "potentialSavings": 4820,
+    "pricesRising": 3,
+    "pricesFalling": 3,
+    "pricesStable": 2
+  },
+  "monthlySavingsOpportunities": [
+    { "material": "Nylon 66", "saving": 1260, "action": "Renegotiate supplier contract — 9% above market" },
+    { "material": "Carbide Inserts", "saving": 840, "action": "Switch supplier — 7.2% above market" },
+    { "material": "Mild Steel", "saving": 1750, "action": "Buy forward at current low prices before Q3 rise" },
+    { "material": "EN8 Steel", "saving": 970, "action": "Minor renegotiation opportunity — 2.4% above market" }
+  ]
+}
