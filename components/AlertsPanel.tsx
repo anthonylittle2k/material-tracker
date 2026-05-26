@@ -1,48 +1,74 @@
 import alerts from "@/data/alerts.json";
 
 const severityConfig = {
-  high:   { bg: "bg-red-400/10",    border: "border-red-400/30",    icon: "🔴", text: "text-red-300" },
-  medium: { bg: "bg-yellow-400/10", border: "border-yellow-400/30", icon: "🟡", text: "text-yellow-300" },
-  low:    { bg: "bg-green-400/10",  border: "border-green-400/30",  icon: "🟢", text: "text-green-300" },
+  high:   { bar: "bg-red-500",    badge: "bg-red-500/10 text-red-400 border-red-500/25",     dot: "bg-red-400" },
+  medium: { bar: "bg-amber-500",  badge: "bg-amber-500/10 text-amber-400 border-amber-500/25", dot: "bg-amber-400" },
+  low:    { bar: "bg-emerald-500",badge: "bg-emerald-500/10 text-emerald-400 border-emerald-500/25", dot: "bg-emerald-400" },
 };
 
 const typeLabel: Record<string, string> = {
-  price_surge:      "Price Surge",
-  buying_opportunity: "Buy Opportunity",
-  supplier_overprice: "Supplier Overprice",
+  price_surge:         "Price Surge",
+  buying_opportunity:  "Buy Opportunity",
+  supplier_overprice:  "Supplier Overprice",
 };
 
 export default function AlertsPanel() {
   const unread = alerts.filter((a) => !a.read).length;
 
   return (
-    <div className="rounded-xl border border-slate-700 overflow-hidden">
-      <div className="px-4 py-3 border-b border-slate-700 flex items-center justify-between">
-        <h2 className="font-semibold text-slate-200">Alerts</h2>
+    <div className="rounded-xl border border-slate-800 overflow-hidden"
+      style={{ background: "rgba(15,23,42,0.6)" }}>
+
+      {/* Header */}
+      <div className="px-5 py-4 border-b border-slate-800 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <div className="w-7 h-7 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center">
+            <svg className="w-3.5 h-3.5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+            </svg>
+          </div>
+          <h2 className="font-semibold text-slate-100 text-sm">Alerts</h2>
+        </div>
         {unread > 0 && (
-          <span className="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">{unread} new</span>
+          <span className="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+            {unread} new
+          </span>
         )}
       </div>
-      <div className="divide-y divide-slate-700/50">
+
+      {/* Alert list */}
+      <div className="divide-y divide-slate-800/60">
         {alerts.map((a) => {
           const cfg = severityConfig[a.severity as keyof typeof severityConfig];
           return (
-            <div key={a.id} className={`p-4 ${!a.read ? "bg-slate-800/40" : ""}`}>
+            <div key={a.id} className={`px-5 py-4 transition-colors hover:bg-slate-800/20 relative ${!a.read ? "bg-slate-800/10" : ""}`}>
+              {/* Severity bar */}
+              <div className={`absolute left-0 top-0 bottom-0 w-0.5 ${cfg.bar}`} />
+
               <div className="flex items-start gap-3">
-                <span className="text-lg mt-0.5">{cfg.icon}</span>
+                <span className={`w-2 h-2 rounded-full flex-shrink-0 mt-1.5 ${cfg.dot}`} />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="text-slate-200 font-medium text-sm">{a.material}</span>
-                    <span className={`text-xs px-2 py-0.5 rounded-full border ${cfg.bg} ${cfg.border} ${cfg.text}`}>
+                    <span className="text-slate-100 font-semibold text-sm">{a.material}</span>
+                    <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${cfg.badge}`}>
                       {typeLabel[a.type]}
                     </span>
-                    {!a.read && <span className="text-xs text-blue-400 font-medium">NEW</span>}
+                    {!a.read && (
+                      <span className="text-xs text-blue-400 font-semibold bg-blue-500/10 border border-blue-500/20 px-1.5 py-0.5 rounded-full">
+                        NEW
+                      </span>
+                    )}
                   </div>
-                  <p className="text-xs text-slate-400 mb-2">{a.message}</p>
-                  <div className="bg-slate-700/40 rounded p-2">
-                    <p className="text-xs text-slate-300"><span className="text-blue-400 font-medium">Action: </span>{a.action}</p>
+                  <p className="text-xs text-slate-400 mb-2 leading-relaxed">{a.message}</p>
+                  <div className="bg-slate-800/60 border border-slate-700/50 rounded-lg px-3 py-2">
+                    <p className="text-xs text-slate-300">
+                      <span className="text-blue-400 font-semibold">Action: </span>
+                      {a.action}
+                    </p>
                   </div>
-                  <p className="text-xs text-slate-600 mt-1">{new Date(a.timestamp).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</p>
+                  <p className="text-xs text-slate-600 mt-2">
+                    {new Date(a.timestamp).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+                  </p>
                 </div>
               </div>
             </div>
