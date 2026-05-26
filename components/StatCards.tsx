@@ -37,55 +37,55 @@ export default function StatCards() {
       label: "Materials Tracked",
       value: stats.materialsTracked,
       sub: "across 5 suppliers",
-      colour: "text-blue-400",
-      iconColour: "text-blue-400",
-      bg: "bg-blue-500/5",
-      border: "border-blue-500/20",
-      iconBg: "bg-blue-500/10",
+      colour: "text-blue-600",
+      iconColour: "text-blue-600",
+      bg: "bg-white",
+      border: "border-slate-200",
+      iconBg: "bg-blue-50",
       icon: icons.tracking,
     },
     {
       label: "Active Alerts",
       value: stats.activeAlerts,
       sub: "require attention",
-      colour: "text-red-400",
-      iconColour: "text-red-400",
-      bg: "bg-red-500/5",
-      border: "border-red-500/20",
-      iconBg: "bg-red-500/10",
+      colour: "text-red-600",
+      iconColour: "text-red-600",
+      bg: "bg-white",
+      border: "border-slate-200",
+      iconBg: "bg-red-50",
       icon: icons.alerts,
     },
     {
       label: "Prices Rising",
       value: stats.pricesRising,
       sub: "materials — caution",
-      colour: "text-orange-400",
-      iconColour: "text-orange-400",
-      bg: "bg-orange-500/5",
-      border: "border-orange-500/20",
-      iconBg: "bg-orange-500/10",
+      colour: "text-orange-600",
+      iconColour: "text-orange-600",
+      bg: "bg-white",
+      border: "border-slate-200",
+      iconBg: "bg-orange-50",
       icon: icons.rising,
     },
     {
       label: "Prices Falling",
       value: stats.pricesFalling,
       sub: "buying opportunity",
-      colour: "text-emerald-400",
-      iconColour: "text-emerald-400",
-      bg: "bg-emerald-500/5",
-      border: "border-emerald-500/20",
-      iconBg: "bg-emerald-500/10",
+      colour: "text-emerald-600",
+      iconColour: "text-emerald-600",
+      bg: "bg-white",
+      border: "border-slate-200",
+      iconBg: "bg-emerald-50",
       icon: icons.falling,
     },
     {
       label: "Monthly Saving",
       value: `£${totalSavings.toLocaleString()}`,
       sub: "via timing & renegotiation",
-      colour: "text-yellow-400",
-      iconColour: "text-yellow-400",
-      bg: "bg-yellow-500/5",
-      border: "border-yellow-500/20",
-      iconBg: "bg-yellow-500/10",
+      colour: "text-amber-600",
+      iconColour: "text-amber-600",
+      bg: "bg-white",
+      border: "border-slate-200",
+      iconBg: "bg-amber-50",
       icon: icons.savings,
     },
   ];
@@ -95,24 +95,16 @@ export default function StatCards() {
       {cards.map((c) => (
         <div
           key={c.label}
-          className={`rounded-xl border ${c.border} ${c.bg} p-5 flex flex-col gap-3 relative overflow-hidden`}
+          className={`rounded-xl border ${c.border} ${c.bg} p-5 flex flex-col gap-3 shadow-sm hover:shadow-md transition-shadow`}
         >
-          {/* Icon */}
           <div className={`w-9 h-9 rounded-lg ${c.iconBg} flex items-center justify-center ${c.iconColour}`}>
             {c.icon}
           </div>
-
-          {/* Value */}
           <div>
             <p className={`text-3xl font-bold tracking-tight ${c.colour}`}>{c.value}</p>
             <p className="text-xs text-slate-500 mt-0.5 font-medium">{c.label}</p>
           </div>
-
-          {/* Sub */}
-          <p className="text-xs text-slate-600">{c.sub}</p>
-
-          {/* Decorative glow */}
-          <div className={`absolute -bottom-4 -right-4 w-16 h-16 rounded-full ${c.iconBg} blur-2xl opacity-60`} />
+          <p className="text-xs text-slate-400">{c.sub}</p>
         </div>
       ))}
     </div>
