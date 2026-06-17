@@ -1,38 +1,31 @@
 "use client";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
+import { Material } from "@/app/lib/api";
 
-type Material = {
-  name: string;
-  grade: string;
-  currentPrice: number;
-  previousPrice: number;
-  unit: string;
-  status: string;
-  change30d: number;
-  aiRecommendation: string;
-  history: { date: string; price: number }[];
-};
-
-const statusColour  = { green: "#10b981", amber: "#f59e0b", red: "#ef4444" };
-const statusLabel   = { green: "Buy Now",  amber: "Monitor",  red: "Caution"  };
-const statusBadge   = {
+const statusColour = { green: "#10b981", amber: "#f59e0b", red: "#ef4444" };
+const statusLabel  = { green: "Buy Now",  amber: "Monitor",  red: "Caution"  };
+const statusBadge  = {
   green: "bg-emerald-50 text-emerald-700 border-emerald-200",
   amber: "bg-amber-50 text-amber-700 border-amber-200",
   red:   "bg-red-50 text-red-700 border-red-200",
 };
 
 export default function PriceChart({ material }: { material: Material }) {
-  const colour   = statusColour[material.status as keyof typeof statusColour] ?? "#64748b";
-  const badge    = statusBadge[material.status as keyof typeof statusBadge] ?? "";
-  const label    = statusLabel[material.status as keyof typeof statusLabel] ?? "Unknown";
-  const priceDiff = material.currentPrice - material.previousPrice;
-  const pricePct  = ((priceDiff / material.previousPrice) * 100).toFixed(1);
-  const isUp      = priceDiff > 0;
+  const colour  = statusColour[material.status as keyof typeof statusColour] ?? "#64748b";
+  const badge   = statusBadge[material.status as keyof typeof statusBadge]   ?? "";
+  const label   = statusLabel[material.status as keyof typeof statusLabel]   ?? "Monitor";
+  const history = material.history ?? [];
+
+  const priceDiff = material.previousPrice
+    ? material.currentPrice - material.previousPrice
+    : material.change30d ? material.currentPrice * (material.change30d / 100) : 0;
+  const pricePct  = material.change30d ?? 0;
+  const isUp      = pricePct > 0;
 
   return (
     <div className="rounded-xl border border-slate-200 bg-white shadow-sm flex flex-col overflow-hidden">
 
-      {/* Card header */}
+      {/* Header */}
       <div className="px-5 pt-5 pb-4 border-b border-slate-100">
         <div className="flex items-start justify-between gap-3">
           <div>
@@ -47,10 +40,10 @@ export default function PriceChart({ material }: { material: Material }) {
         {/* Price */}
         <div className="flex items-end gap-2 mt-4">
           <span className="text-4xl font-bold text-slate-900 tracking-tight">
-            £{material.currentPrice.toLocaleString()}
+            £{material.currentPrice?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </span>
           <span className={`text-sm mb-1 font-semibold flex items-center gap-1 ${isUp ? "text-red-500" : "text-emerald-500"}`}>
-            {isUp ? "▲" : "▼"} {Math.abs(Number(pricePct))}%
+            {isUp ? "▲" : "▼"} {Math.abs(pricePct)}%
             <span className="text-slate-400 font-normal text-xs">30d</span>
           </span>
         </div>
@@ -58,45 +51,56 @@ export default function PriceChart({ material }: { material: Material }) {
 
       {/* Chart */}
       <div className="px-2 pt-4 pb-2 h-44">
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={material.history} margin={{ top: 4, right: 8, bottom: 0, left: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
-            <XAxis
-              dataKey="date"
-              tick={{ fill: "#94a3b8", fontSize: 10 }}
-              axisLine={false}
-              tickLine={false}
-              tickMargin={6}
-            />
-            <YAxis
-              tick={{ fill: "#94a3b8", fontSize: 10 }}
-              axisLine={false}
-              tickLine={false}
-              domain={["auto", "auto"]}
-              tickFormatter={(v) => `£${v.toLocaleString()}`}
-              width={68}
-            />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: "#ffffff",
-                border: "1px solid #e2e8f0",
-                borderRadius: 8,
-                fontSize: 12,
-                boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-              }}
-              labelStyle={{ color: "#94a3b8", marginBottom: 4 }}
-              formatter={(v) => [`£${Number(v).toLocaleString()}`, material.name]}
-            />
-            <Line
-              type="monotone"
-              dataKey="price"
-              stroke={colour}
-              strokeWidth={2.5}
-              dot={false}
-              activeDot={{ r: 4, fill: colour, strokeWidth: 0 }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
+        {history.length > 0 ? (
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={history} margin={{ top: 4, right: 8, bottom: 0, left: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+              <XAxis
+                dataKey="date"
+                tick={{ fill: "#94a3b8", fontSize: 10 }}
+                axisLine={false}
+                tickLine={false}
+                tickMargin={6}
+                tickFormatter={(v) => {
+                  const d = new Date(v);
+                  return `${d.getDate()}/${d.getMonth() + 1}`;
+                }}
+                interval="preserveStartEnd"
+              />
+              <YAxis
+                tick={{ fill: "#94a3b8", fontSize: 10 }}
+                axisLine={false}
+                tickLine={false}
+                domain={["auto", "auto"]}
+                tickFormatter={(v) => `£${Number(v).toLocaleString()}`}
+                width={72}
+              />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#ffffff",
+                  border: "1px solid #e2e8f0",
+                  borderRadius: 8,
+                  fontSize: 12,
+                  boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+                }}
+                labelStyle={{ color: "#94a3b8", marginBottom: 4 }}
+                formatter={(v) => [`£${Number(v).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, material.name]}
+              />
+              <Line
+                type="monotone"
+                dataKey="price"
+                stroke={colour}
+                strokeWidth={2.5}
+                dot={false}
+                activeDot={{ r: 4, fill: colour, strokeWidth: 0 }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        ) : (
+          <div className="h-full flex items-center justify-center">
+            <p className="text-slate-400 text-xs">Loading price history...</p>
+          </div>
+        )}
       </div>
 
       {/* AI Recommendation */}

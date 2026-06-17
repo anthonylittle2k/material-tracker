@@ -1,4 +1,4 @@
-import summary from "@/data/summary.json";
+import { Summary } from "@/app/lib/api";
 
 const icons = {
   tracking: (
@@ -28,75 +28,22 @@ const icons = {
   ),
 };
 
-export default function StatCards() {
+export default function StatCards({ summary }: { summary: Summary }) {
   const { stats, monthlySavingsOpportunities } = summary;
   const totalSavings = monthlySavingsOpportunities.reduce((a, b) => a + b.saving, 0);
 
   const cards = [
-    {
-      label: "Materials Tracked",
-      value: stats.materialsTracked,
-      sub: "across 5 suppliers",
-      colour: "text-blue-600",
-      iconColour: "text-blue-600",
-      bg: "bg-white",
-      border: "border-slate-200",
-      iconBg: "bg-blue-50",
-      icon: icons.tracking,
-    },
-    {
-      label: "Active Alerts",
-      value: stats.activeAlerts,
-      sub: "require attention",
-      colour: "text-red-600",
-      iconColour: "text-red-600",
-      bg: "bg-white",
-      border: "border-slate-200",
-      iconBg: "bg-red-50",
-      icon: icons.alerts,
-    },
-    {
-      label: "Prices Rising",
-      value: stats.pricesRising,
-      sub: "materials — caution",
-      colour: "text-orange-600",
-      iconColour: "text-orange-600",
-      bg: "bg-white",
-      border: "border-slate-200",
-      iconBg: "bg-orange-50",
-      icon: icons.rising,
-    },
-    {
-      label: "Prices Falling",
-      value: stats.pricesFalling,
-      sub: "buying opportunity",
-      colour: "text-emerald-600",
-      iconColour: "text-emerald-600",
-      bg: "bg-white",
-      border: "border-slate-200",
-      iconBg: "bg-emerald-50",
-      icon: icons.falling,
-    },
-    {
-      label: "Monthly Saving",
-      value: `£${totalSavings.toLocaleString()}`,
-      sub: "via timing & renegotiation",
-      colour: "text-amber-600",
-      iconColour: "text-amber-600",
-      bg: "bg-white",
-      border: "border-slate-200",
-      iconBg: "bg-amber-50",
-      icon: icons.savings,
-    },
+    { label: "Materials Tracked",  value: stats.materialsTracked,            sub: "across your suppliers",       colour: "text-blue-600",   iconColour: "text-blue-600",   iconBg: "bg-blue-50",   icon: icons.tracking },
+    { label: "Active Alerts",      value: stats.activeAlerts,                sub: "require attention",            colour: "text-red-600",    iconColour: "text-red-600",    iconBg: "bg-red-50",    icon: icons.alerts   },
+    { label: "Prices Rising",      value: stats.pricesRising,                sub: "materials — caution",          colour: "text-orange-600", iconColour: "text-orange-600", iconBg: "bg-orange-50", icon: icons.rising   },
+    { label: "Prices Falling",     value: stats.pricesFalling,               sub: "buying opportunity",           colour: "text-emerald-600",iconColour: "text-emerald-600",iconBg: "bg-emerald-50",icon: icons.falling  },
+    { label: "Monthly Saving",     value: `£${totalSavings.toLocaleString()}`,sub: "via timing & renegotiation", colour: "text-amber-600",  iconColour: "text-amber-600",  iconBg: "bg-amber-50",  icon: icons.savings  },
   ];
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4">
       {cards.map((c) => (
-        <div
-          key={c.label}
-          className={`rounded-xl border ${c.border} ${c.bg} p-5 flex flex-col gap-3 shadow-sm hover:shadow-md transition-shadow`}
-        >
+        <div key={c.label} className="rounded-xl border border-slate-200 bg-white p-5 flex flex-col gap-3 shadow-sm hover:shadow-md transition-shadow">
           <div className={`w-9 h-9 rounded-lg ${c.iconBg} flex items-center justify-center ${c.iconColour}`}>
             {c.icon}
           </div>

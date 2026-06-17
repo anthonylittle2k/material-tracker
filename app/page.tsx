@@ -3,9 +3,25 @@ import MaterialsTable from "@/components/MaterialsTable";
 import AlertsPanel from "@/components/AlertsPanel";
 import NewsPanel from "@/components/NewsPanel";
 import SavingsPanel from "@/components/SavingsPanel";
-import summary from "@/data/summary.json";
+import { fetchSummary } from "@/app/lib/api";
 
-export default function Dashboard() {
+export const revalidate = 300; // Revalidate page every 5 minutes
+
+export default async function Dashboard() {
+  // Fetch summary server-side — stat cards and savings panel get real data immediately
+  let summary;
+  try {
+    summary = await fetchSummary();
+  } catch {
+    // Fallback if API is unreachable
+    summary = {
+      companyName: "Precision Parts Ltd",
+      lastUpdated: new Date().toISOString(),
+      stats: { materialsTracked: 8, activeAlerts: 0, pricesRising: 0, pricesFalling: 0 },
+      monthlySavingsOpportunities: [],
+    };
+  }
+
   const lastUpdated = new Date(summary.lastUpdated).toLocaleString("en-GB", {
     day: "numeric", month: "short", year: "numeric",
     hour: "2-digit", minute: "2-digit",
@@ -31,7 +47,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Right side */}
+          {/* Right */}
           <div className="flex items-center gap-3">
             <div className="hidden md:flex items-center gap-2 text-xs text-slate-500 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-full">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -54,10 +70,10 @@ export default function Dashboard() {
 
       {/* Main content */}
       <main className="max-w-screen-2xl mx-auto px-6 py-6 space-y-6">
-        <StatCards />
+        <StatCards summary={summary} />
         <MaterialsTable />
         <div className="grid xl:grid-cols-3 gap-5">
-          <SavingsPanel />
+          <SavingsPanel summary={summary} />
           <AlertsPanel />
           <NewsPanel />
         </div>
@@ -65,7 +81,7 @@ export default function Dashboard() {
 
       <footer className="max-w-screen-2xl mx-auto px-6 py-6 mt-4 border-t border-slate-200 flex items-center justify-between text-xs text-slate-400">
         <span>© 2026 MatTrack · Material Price Intelligence</span>
-        <span>Mock data · Built with Next.js</span>
+        <span>Prices update every 5 minutes · Built with Next.js + Python</span>
       </footer>
     </div>
   );

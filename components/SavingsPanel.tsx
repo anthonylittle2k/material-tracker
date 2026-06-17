@@ -1,8 +1,8 @@
-import summary from "@/data/summary.json";
+import { Summary } from "@/app/lib/api";
 
-export default function SavingsPanel() {
-  const { monthlySavingsOpportunities } = summary;
-  const total = monthlySavingsOpportunities.reduce((a, b) => a + b.saving, 0);
+export default function SavingsPanel({ summary }: { summary: Summary }) {
+  const { monthlySavingsOpportunities: opportunities } = summary;
+  const total = opportunities.reduce((a, b) => a + b.saving, 0);
 
   return (
     <div className="rounded-xl border border-amber-200 bg-white shadow-sm overflow-hidden">
@@ -27,20 +27,24 @@ export default function SavingsPanel() {
       </div>
 
       <div className="divide-y divide-slate-100">
-        {monthlySavingsOpportunities.map((s, i) => (
-          <div key={i} className="px-5 py-3.5 flex items-center gap-4 hover:bg-slate-50 transition-colors">
-            <div className="w-6 h-6 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center flex-shrink-0">
-              <span className="text-amber-600 text-xs font-bold">{i + 1}</span>
+        {opportunities.length === 0 ? (
+          <p className="px-5 py-6 text-sm text-slate-400 text-center">No savings opportunities identified yet.</p>
+        ) : (
+          opportunities.map((s, i) => (
+            <div key={i} className="px-5 py-3.5 flex items-center gap-4 hover:bg-slate-50 transition-colors">
+              <div className="w-6 h-6 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center flex-shrink-0">
+                <span className="text-amber-600 text-xs font-bold">{i + 1}</span>
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-slate-700 font-semibold truncate">{s.material}</p>
+                <p className="text-xs text-slate-400 truncate">{s.action}</p>
+              </div>
+              <p className="text-amber-600 font-bold font-mono text-sm flex-shrink-0">
+                £{s.saving.toLocaleString()}
+              </p>
             </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm text-slate-700 font-semibold truncate">{s.material}</p>
-              <p className="text-xs text-slate-400 truncate">{s.action}</p>
-            </div>
-            <p className="text-amber-600 font-bold font-mono text-sm flex-shrink-0">
-              £{s.saving.toLocaleString()}
-            </p>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );
