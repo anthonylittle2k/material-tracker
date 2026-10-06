@@ -83,7 +83,7 @@ export default function MaterialsTable() {
           <div>
             <h2 className="font-semibold text-slate-800 text-sm">Tracked Materials</h2>
             <p className="text-xs text-slate-400 mt-0.5">
-              {loading ? "Loading..." : `${materials.length} materials · live prices · click a row to expand`}
+              {loading ? "Loading..." : `${materials.length} materials · monthly market prices · click a row to expand`}
             </p>
           </div>
           <span className="text-xs text-slate-500 bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-lg">
@@ -98,7 +98,7 @@ export default function MaterialsTable() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-slate-100 bg-slate-50">
-                  {["Material", "Price", "7d", "30d", "90d", "Signal"].map((h, i) => (
+                  {["Material", "Price", "1m", "3m", "12m", "Signal"].map((h, i) => (
                     <th key={h} className={`px-4 py-2.5 text-xs font-semibold text-slate-500 uppercase tracking-wider
                       ${i === 0 ? "text-left px-5" : i < 5 ? "text-right" : "text-center"}`}>
                       {h}
@@ -135,9 +135,9 @@ export default function MaterialsTable() {
                           </span>
                           <span className="text-slate-400 text-xs ml-1">/{m.unit}</span>
                         </td>
-                        <td className="px-4 py-3.5 text-right"><ChangeCell value={m.change7d} /></td>
-                        <td className="px-4 py-3.5 text-right"><ChangeCell value={m.change30d} /></td>
-                        <td className="px-4 py-3.5 text-right"><ChangeCell value={m.change90d} /></td>
+                        <td className="px-4 py-3.5 text-right"><ChangeCell value={m.change1m} /></td>
+                        <td className="px-4 py-3.5 text-right"><ChangeCell value={m.change3m} /></td>
+                        <td className="px-4 py-3.5 text-right"><ChangeCell value={m.change12m} /></td>
                         <td className="px-4 py-3.5 text-center">
                           <span className={`text-xs px-2.5 py-1 rounded-full border font-semibold ${cfg.badge}`}>
                             {cfg.label}

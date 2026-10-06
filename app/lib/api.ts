@@ -27,11 +27,11 @@ export interface Material {
   lastUpdated: string;
   status: MaterialStatus;
   signal: string;
-  change7d: number;
-  change30d: number;
-  change90d: number;
-  avg30d: number;
-  avg90d: number;
+  change1m: number;
+  change3m: number;
+  change12m: number;
+  avg6m: number;
+  avg12m: number;
   aiRecommendation: string;
   history?: PricePoint[];
   priceSource?: PriceSource;
@@ -92,8 +92,8 @@ export async function fetchMaterials(): Promise<Material[]> {
   return apiFetch<Material[]>("/api/materials");
 }
 
-export async function fetchMaterial(id: string, days = 90): Promise<Material> {
-  return apiFetch<Material>(`/api/materials/${id}?days=${days}`);
+export async function fetchMaterial(id: string, months = 36): Promise<Material> {
+  return apiFetch<Material>(`/api/materials/${id}?months=${months}`);
 }
 
 export async function fetchAlerts(limit = 20): Promise<Alert[]> {

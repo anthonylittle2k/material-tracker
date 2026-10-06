@@ -18,8 +18,8 @@ export default function PriceChart({ material }: { material: Material }) {
 
   const priceDiff = material.previousPrice
     ? material.currentPrice - material.previousPrice
-    : material.change30d ? material.currentPrice * (material.change30d / 100) : 0;
-  const pricePct  = material.change30d ?? 0;
+    : material.change3m ? material.currentPrice * (material.change3m / 100) : 0;
+  const pricePct  = material.change3m ?? 0;
   const isUp      = pricePct > 0;
 
   return (
@@ -34,6 +34,9 @@ export default function PriceChart({ material }: { material: Material }) {
             {material.priceSource && (
               <p className="text-[11px] text-slate-400 mt-1" title="How this price is derived">
                 Source: {material.priceSource.basis}
+                {material.lastUpdated && (
+                  <> · latest: {new Date(material.lastUpdated).toLocaleDateString("en-GB", { month: "long", year: "numeric" })}</>
+                )}
               </p>
             )}
           </div>
@@ -49,7 +52,7 @@ export default function PriceChart({ material }: { material: Material }) {
           </span>
           <span className={`text-sm mb-1 font-semibold flex items-center gap-1 ${isUp ? "text-red-500" : "text-emerald-500"}`}>
             {isUp ? "▲" : "▼"} {Math.abs(pricePct)}%
-            <span className="text-slate-400 font-normal text-xs">30d</span>
+            <span className="text-slate-400 font-normal text-xs">3m</span>
           </span>
         </div>
       </div>
@@ -66,10 +69,9 @@ export default function PriceChart({ material }: { material: Material }) {
                 axisLine={false}
                 tickLine={false}
                 tickMargin={6}
-                tickFormatter={(v) => {
-                  const d = new Date(v);
-                  return `${d.getDate()}/${d.getMonth() + 1}`;
-                }}
+                tickFormatter={(v) =>
+                  new Date(v).toLocaleDateString("en-GB", { month: "short", year: "2-digit" })
+                }
                 interval="preserveStartEnd"
               />
               <YAxis
@@ -89,6 +91,9 @@ export default function PriceChart({ material }: { material: Material }) {
                   boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
                 }}
                 labelStyle={{ color: "#94a3b8", marginBottom: 4 }}
+                labelFormatter={(v) =>
+                  new Date(v).toLocaleDateString("en-GB", { month: "long", year: "numeric" })
+                }
                 formatter={(v) => [`£${Number(v).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, material.name]}
               />
               <Line

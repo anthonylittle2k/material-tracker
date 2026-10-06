@@ -51,7 +51,7 @@ export default async function Dashboard() {
           <div className="flex items-center gap-3">
             <div className="hidden md:flex items-center gap-2 text-xs text-slate-500 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-full">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="font-medium text-emerald-600">Live</span>
+              <span className="font-medium text-emerald-600">Synced</span>
               <span className="text-slate-300">·</span>
               <span>{lastUpdated}</span>
             </div>
@@ -79,9 +79,21 @@ export default async function Dashboard() {
         </div>
       </main>
 
-      <footer className="max-w-screen-2xl mx-auto px-6 py-6 mt-4 border-t border-slate-200 flex items-center justify-between text-xs text-slate-400">
-        <span>© 2026 MatTrack · Material Price Intelligence</span>
-        <span>Prices update every 5 minutes · Built with Next.js + Python</span>
+      <footer className="max-w-screen-2xl mx-auto px-6 py-6 mt-4 border-t border-slate-200 text-xs text-slate-400 space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <span>© 2026 MatTrack · Material Price Intelligence</span>
+          <span>Market prices are monthly averages, updated as sources publish</span>
+        </div>
+        <p className="leading-relaxed">
+          Data sources:{" "}
+          <a className="underline hover:text-slate-600" href="https://www.ons.gov.uk/economy/inflationandpriceindices/datasets/producerpriceindexstatisticalbulletindataset">ONS Producer Price Indices</a>
+          {" "}— contains public sector information licensed under the{" "}
+          <a className="underline hover:text-slate-600" href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0</a>.{" "}
+          <a className="underline hover:text-slate-600" href="https://www.worldbank.org/en/research/commodity-markets">World Bank Commodity Price Data (The Pink Sheet)</a>
+          {" "}— licensed under{" "}
+          <a className="underline hover:text-slate-600" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.{" "}
+          Exchange rates — source: ECB statistics. Material prices are MatTrack estimates derived from these sources.
+        </p>
       </footer>
     </div>
   );
