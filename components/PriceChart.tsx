@@ -31,6 +31,11 @@ export default function PriceChart({ material }: { material: Material }) {
           <div>
             <h2 className="font-semibold text-slate-800 text-sm">{material.name}</h2>
             <p className="text-xs text-slate-400 mt-0.5">{material.grade} · per {material.unit}</p>
+            {material.priceSource && (
+              <p className="text-[11px] text-slate-400 mt-1" title="How this price is derived">
+                Source: {material.priceSource.basis}
+              </p>
+            )}
           </div>
           <span className={`text-xs px-2.5 py-1 rounded-full border font-semibold flex-shrink-0 ${badge}`}>
             {label}

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { fetchMaterials, fetchMaterial, Material } from "@/app/lib/api";
 import PriceChart from "./PriceChart";
 
@@ -113,7 +113,7 @@ export default function MaterialsTable() {
                   const isExpanded = expanded === m.id;
 
                   return (
-                    <>
+                    <Fragment key={m.id}>
                       <tr
                         key={m.id}
                         onClick={() => handleRowClick(m)}
@@ -195,7 +195,7 @@ export default function MaterialsTable() {
                           </td>
                         </tr>
                       )}
-                    </>
+                    </Fragment>
                   );
                 })}
               </tbody>

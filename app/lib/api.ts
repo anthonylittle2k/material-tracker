@@ -34,6 +34,12 @@ export interface Material {
   avg90d: number;
   aiRecommendation: string;
   history?: PricePoint[];
+  priceSource?: PriceSource;
+}
+
+export interface PriceSource {
+  type: "exchange" | "index" | "fixed";
+  basis: string;
 }
 
 export interface Alert {
