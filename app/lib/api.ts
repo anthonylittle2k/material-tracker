@@ -37,6 +37,17 @@ export interface Material {
   priceSource?: PriceSource;
 }
 
+export interface NewsItem {
+  id: string;
+  headline: string;
+  summary: string;
+  tags: string[];
+  type: string;
+  source: string;
+  date: string;
+  url: string;
+}
+
 export interface PriceSource {
   type: "exchange" | "index" | "fixed";
   basis: string;
@@ -98,6 +109,10 @@ export async function fetchMaterial(id: string, months = 36): Promise<Material> 
 
 export async function fetchAlerts(limit = 20): Promise<Alert[]> {
   return apiFetch<Alert[]>(`/api/alerts?limit=${limit}`);
+}
+
+export async function fetchNews(limit = 8): Promise<NewsItem[]> {
+  return apiFetch<NewsItem[]>(`/api/news?limit=${limit}`);
 }
 
 export async function markAlertRead(id: number): Promise<void> {

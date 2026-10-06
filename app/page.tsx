@@ -92,6 +92,9 @@ export default async function Dashboard() {
           <a className="underline hover:text-slate-600" href="https://www.worldbank.org/en/research/commodity-markets">World Bank Commodity Price Data (The Pink Sheet)</a>
           {" "}— licensed under{" "}
           <a className="underline hover:text-slate-600" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.{" "}
+          Policy updates from{" "}
+          <a className="underline hover:text-slate-600" href="https://www.gov.uk/search/news-and-communications">GOV.UK</a>
+          {" "}under the Open Government Licence v3.0.{" "}
           Exchange rates — source: ECB statistics. Material prices are MatTrack estimates derived from these sources.
         </p>
       </footer>
